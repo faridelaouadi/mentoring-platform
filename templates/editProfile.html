@@ -1,0 +1,184 @@
+{% extends "home_layout.html" %}
+
+{% block title %}
+    Edit Profile for: {{session['fname']}}
+{% endblock %}
+
+
+
+{% block body %}
+<h2 style="text-align:center;">Edit Profile</h2>
+<div class="row">
+  <div class="col-xs-12 col-sm-3 center">
+
+    <form action="{{ url_for('profileChanges') }}" method="post" id="editProfile" enctype="multipart/form-data">
+    </form>
+
+    <span class="profile-picture">
+      <img id="blah" src="{{ url_for('static', filename= session['pic']) }}" style="max-width: 100%;">
+    </span>
+
+    <div class="space space-4"></div>
+
+    <a href="#" class="btn btn-sm btn-block btn-danger">
+      <input type="file" name="file" form="editProfile" onchange="readURL(this);" accept="image/*" style="max-width: 100%;">
+    </a>
+  </div><!-- /.col -->
+
+  <div class="col-xs-12 col-sm-9">
+    <h4 >
+      <span class="middle">{{session['fname']}} {{session['lname']}}</span>
+    </h4>
+
+    <div class="profile-user-info">
+
+      <div class="profile-info-row">
+        <div class="profile-info-name"> Username </div>
+        <div class="profile-info-value">
+          <input class="form-control" type="text" placeholder="{{session['username']}} (Can't be changed)" readonly>
+        </div>
+      </div>
+
+
+
+      <div class="profile-info-row">
+        <div class="profile-info-name"> First Name </div>
+        <div class="profile-info-value">
+          <input type="text" form="editProfile" name="fname" class="form-control" value="{{session['fname']}}">
+        </div>
+      </div>
+
+      <div class="profile-info-row">
+        <div class="profile-info-name"> Last Name </div>
+        <div class="profile-info-value">
+          <input type="text" form="editProfile" name="lname" class="form-control" value="{{session['lname']}}">
+        </div>
+      </div>
+
+      <div class="profile-info-row">
+        <div class="profile-info-name"> Email </div>
+        <div class="profile-info-value">
+          <input type="text" form="editProfile" name="email" class="form-control" value="{{session['email']}}">
+        </div>
+      </div>
+
+      <div class="profile-info-row">
+        <div class="profile-info-name"> Job </div>
+        <div class="profile-info-value">
+          {% if session["user_type"] == "mentor" %}
+            <input type="text" form="editProfile" name="job" class="form-control" value="{{session['job']}}">
+          {% else %}
+            <input class="form-control" type="text" placeholder="Student" readonly>
+          {% endif %}
+        </div>
+      </div>
+
+
+    </div>
+
+
+      <div class="profile-info-row">
+        <div class="profile-info-name"> Preferences </div>
+
+        <div class="profile-info-value">
+          {% if session["user_type"] == "mentor" %}
+
+            {% if session["cv_help"] %}
+              <input type="checkbox"  form="editProfile" name = "cvhelp2"  id="exampleCheck4" checked>
+            {% else %}
+              <input type="checkbox"  form="editProfile" name = "cvhelp2"  id="exampleCheck4" >
+            {% endif %}
+            <label class="form-check-label" for="exampleCheck4">CV tips/Cover letter help</label><br>
+
+            {% if session["meetStudents"] %}
+              <input type="checkbox"  form="editProfile" name = "meet_students"  id="exampleCheck5" checked>
+            {% else %}
+              <input type="checkbox"  form="editProfile" name = "meet_students"  id="exampleCheck5">
+            {% endif %}
+            <label class="form-check-label" for="exampleCheck5">Meeting current students and advising them</label><br>
+
+            {% if session["mockInterview"] %}
+              <input type="checkbox"  form="editProfile" name = "mockInterview2"  id="exampleCheck6" checked>
+            {% else %}
+              <input type="checkbox"  form="editProfile" name = "mockInterview2"  id="exampleCheck6" >
+            {% endif %}
+            <label class="form-check-label" for="exampleCheck6">Mock interviews</label><br>
+
+            {% if session["workExp"] %}
+              <input type="checkbox"  form="editProfile" name = "workExp"  id="exampleCheck7" checked>
+            {% else %}
+              <input type="checkbox"  form="editProfile" name = "workExp"  id="exampleCheck7">
+            {% endif %}
+            <label class="form-check-label" for="exampleCheck7">Arranging work experience</label><br>
+
+
+          {% else %}
+
+            {% if session["cv_help"] %}
+              <input type="checkbox"  form="editProfile" name = "cvhelp2"  id="exampleCheck1" checked>
+            {% else %}
+              <input type="checkbox"  form="editProfile" name = "cvhelp2"  id="exampleCheck1" >
+            {% endif %}
+            <label class="form-check-label" for="exampleCheck1">CV tips/Cover letter help</label><br>
+
+            {% if session["mockInterview"] %}
+              <input type="checkbox" form="editProfile" name="mockInterview"  id="exampleCheck3" checked>
+            {% else %}
+              <input type="checkbox" form="editProfile" name="mockInterview"  id="exampleCheck3">
+            {% endif %}
+            <label class="form-check-label" for="exampleCheck3">Mock interviews</label><br>
+
+            {% if session["meetAlumni"] %}
+              <input type="checkbox" form="editProfile" name="meetAlumni"  id="exampleCheck2" checked>
+            {% else %}
+              <input type="checkbox" form="editProfile" name="meetAlumni"  id="exampleCheck2">
+            {% endif %}
+            <label class="form-check-label" for="exampleCheck2">Meeting an alumni mentor</label><br>
+
+
+          {% endif %}
+
+        </div>
+
+    </div>
+  </div><!-- /.col -->
+
+</div><!-- /.row -->
+
+<div class="space-20"></div>
+
+<div class="row">
+  <div class="col-xs-12 col-sm-6">
+    <div class="widget-box transparent">
+      <div class="form-group">
+    <label for="exampleFormControlTextarea1">Edit Bio</label>
+    <textarea class="form-control" form="editProfile" name="bio" id="exampleFormControlTextarea1" rows="3" >{{session["bio"]}}</textarea>
+
+  </div>
+    </div>
+  </div>
+</div>
+
+<div class="line"></div>
+
+<script>
+
+  function readURL(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    $('#blah')
+                        .attr('src', e.target.result);
+                };
+
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+</script>
+
+{% endblock %}
+
+{% block right_button %}
+<button type="submit" form="editProfile" class="btn btn-outline-success">Save Changes</button>
+{% endblock %}

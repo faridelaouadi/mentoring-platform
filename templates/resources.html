@@ -1,0 +1,103 @@
+{% extends "home_layout.html" %}
+
+{% block title %}
+    Home {{name}}
+{% endblock %}
+
+{% block body %}
+<h2 style="text-align:center;">Resources here</h2>
+
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" ">Add a resource</button>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">New Resource</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form action="{{ url_for('addResource') }}" method="post" id="addResource" enctype="multipart/form-data">
+          <div class="form-group">
+            <label for="resource_title" class="col-form-label">Title</label>
+            <input type="text" class="form-control" name="resource_title">
+          </div>
+          <div class="form-group">
+            <label for="resource_description" class="col-form-label">Description</label>
+            <textarea class="form-control" name="resource_description"></textarea>
+          </div>
+          <div class="form-group">
+            <a href="#" class="btn btn-sm btn-block btn-danger">
+              <input type="file" name="file" accept="application/pdf">
+            </a>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="submit" form="addResource" class="btn btn-primary">Submit Resource</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+<div class="space-20"></div>
+
+<div class="line"></div>
+
+<div class="row">
+  {% for resource in resources_data %}
+    <div class="col-sm-6" >
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">{{resource.title}}</h5>
+          <p class="card-text">{{resource.description}}</p>
+
+          {% set file_path = ["resources/", resource.file]|join %}
+          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#{{resource.id}}">
+            Open Resource preview
+          </button>
+          <a href="{{ url_for('static', filename= file_path) }}" class="btn btn-warning" target="_new">Open in new tab</a>
+        </div>
+      </div>
+    </div>
+
+  <!-- Modal -->
+  <div class="modal fade" id="{{resource.id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">{{resource.title}}</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <iframe src="{{ url_for('static', filename= file_path) }}" width = "470px" height="600px">
+          <p>Your browser does not support iframes therefore the preview feature will not work :'(</p>
+        </iframe>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {% endfor %}
+
+
+</div>
+
+
+{% endblock %}
+
+{% block right_button %}
+<button type="button" class="btn btn-outline-danger" onclick="window.location.href='{{ url_for('editProfile') }}';">Edit Profile</button>
+{% endblock %}

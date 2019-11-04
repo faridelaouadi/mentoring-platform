@@ -1,0 +1,135 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Sign up!
+{% endblock %}
+
+{% block body %}
+<body>
+  <div class="container register">
+                <div class="row">
+                    <div class="col-md-3 register-left">
+                        <img src="{{ url_for('static', filename='img/arabsoc.png') }}" alt=""/>
+                        <h3>Welcome</h3>
+                        <p>Enter your details in the form to the right. Once submitted, you will be able to access the ArabNA Soc Careers platform</p>
+
+                    </div>
+                    <div class="col-md-9 register-right">
+                        <ul class="nav nav-tabs nav-justified" id="myTab" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Mentee</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Mentor</a>
+                            </li>
+                        </ul>
+                        <div class="tab-content" id="myTabContent">
+                            <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                                <form action="{{ url_for('registerUser') }}" method="post" id="form1">
+                                </form>
+                                <h3 class="register-heading">Sign up as a Mentee</h3>
+                                <div class="row register-form">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" name="fname" form="form1" autocomplete="off" placeholder="First Name *" value="" />
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" name="lname" form="form1" autocomplete="off" placeholder="Last Name *" value="" />
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" name="username" form="form1" autocomplete="off" placeholder="Username *" value="" />
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="password" class="form-control" name="password" form="form1" autocomplete="off" placeholder="Password *" value="" />
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="password" class="form-control"  name="confirm_password" form="form1" autocomplete="off" placeholder="Confirm Password *" value="" />
+                                        </div>
+
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <input type="email" class="form-control" name="email" form="form1" placeholder="Your Email *" value="" />
+                                        </div>
+
+                                        <div class="form-group" style="padding-left:20px;">
+                                            <p>What do you need help with?</p>
+                                            <input type="checkbox" form="form1" name = "cvhelp" class="form-check-input" id="exampleCheck1">
+                                            <label class="form-check-label" for="exampleCheck1">CV tips/Cover letter help</label><br>
+                                            <input type="checkbox" form="form1" name="meetAlumni" class="form-check-input" id="exampleCheck2">
+                                            <label class="form-check-label" for="exampleCheck2">Meeting an alumni mentor</label><br>
+                                            <input type="checkbox" form="form1" name="mockInterview" class="form-check-input" id="exampleCheck3">
+                                            <label class="form-check-label" for="exampleCheck3">Mock interviews</label><br>
+
+
+                                        </div>
+
+
+                                        <input type="submit" form="form1" name="menteeFormbutton" class="btnRegister"  value="Register"/>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="tab-pane fade show" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                                <form action="{{ url_for('registerUser') }}" method="post" id="form2" autocomplete="off">
+                                </form>
+                                <h3  class="register-heading">Sign up as a Mentor</h3>
+                                <div class="row register-form">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" form="form2" name="fname2" placeholder="First Name *" value="" />
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" form="form2" name="lname2" placeholder="Last Name *" value="" />
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" form="form2" name="username2" placeholder="Username *" value="" />
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="password" class="form-control" form="form2" name="password2" placeholder="Password *" value="" />
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="password" class="form-control" form="form2" placeholder="Confirm Password *" value="" />
+                                        </div>
+
+
+                                    </div>
+                                    <div class="col-md-6">
+                                      <div class="form-group">
+                                          <input type="email" class="form-control" form="form2" name="email2" placeholder="Your Email *" value="" />
+                                      </div>
+
+
+                                      <div class="form-group">
+                                          <input type="text" class="form-control" name="job" form="form2" placeholder="Current Occupation/Industry" value=""  />
+                                      </div>
+                                      <div class="form-group" style="padding-left:20px;">
+                                          <p>What will you be willing to help with?</p>
+                                          <input type="checkbox" form="form2" name = "cvhelp2" class="form-check-input" id="exampleCheck4">
+                                          <label class="form-check-label" for="exampleCheck4">CV tips/Cover letter help</label><br>
+                                          <input type="checkbox" form="form2" name = "meet_students" class="form-check-input" id="exampleCheck5">
+                                          <label class="form-check-label" for="exampleCheck5">Meeting current students and advising them</label><br>
+                                          <input type="checkbox" form="form2" name = "mockInterview2" class="form-check-input" id="exampleCheck6">
+                                          <label class="form-check-label" for="exampleCheck6">Mock interviews</label><br>
+                                          <input type="checkbox" form="form2" name = "workExp" class="form-check-input" id="exampleCheck7">
+                                          <label class="form-check-label" for="exampleCheck7">Arranging work experience</label><br>
+                                          <input type="checkbox" form="form2" name = "attendEvents" class="form-check-input" id="exampleCheck8">
+                                          <label class="form-check-label" for="exampleCheck8">Attending events hosted by ArabNASoc Careers</label><br>
+
+                                      </div>
+                                        <input type="submit" class="btnRegister" form="form2" name="mentorFormButton" value="Register"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+{% endblock %}
+
+{% block right_button %}
+  <button type="button" class="btn btn-success" onclick="window.location.href='{{url_for('login')}}';">Log in</button>
+
+{% endblock %}

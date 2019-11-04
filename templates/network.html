@@ -1,0 +1,217 @@
+{% extends "home_layout.html" %}
+
+{% block title %}
+    Home
+{% endblock %}
+
+{% block body %}
+<h2 style="text-align:center;">Network below</h2>
+<p style="text-align:center;">Here is a list of all mentees who have signed up to the platform</p>
+<form action="{{ url_for('network') }}" method="post" style="text-align:center; padding-bottom: 20px;">
+
+  {% if session["mentee_data"] %}
+    <input type="checkbox" name="viewMentees" checked> View Mentees
+  {% else %}
+    <input type="checkbox" name="viewMentees"> View Mentees
+  {% endif %}
+
+  {% if session["mentor_data"] %}
+    <input type="checkbox" name="viewMentors" checked> View Mentors<br>
+  {% else %}
+    <input type="checkbox" name="viewMentors"> View Mentors<br>
+  {% endif %}
+
+  <input class="btn btn-primary" type="submit" value="Refresh" />
+</form>
+
+
+
+<div class="container">
+  <div class="row" style="padding-bottom:20px;">
+
+    {% if mentee_data %}
+      {% for mentee in mentee_data %}
+        <div class="col-sm">
+          <div class="flip-card">
+            <div class="flip-card-inner">
+              <div class="flip-card-front" style="background-color:#F0E68C;">
+                {% set file_path = ["img/", mentee.profile_pic]|join %}
+                <img src="{{ url_for('static', filename= file_path) }}" alt="Avatar" style="max-height:230px;width:100%;padding:10px;">
+                <p style="color:black;">{{mentee.fname}} {{mentee.lname}}</p>
+              </div>
+              <div class="flip-card-back" style="background-color:#F0E68C;">
+                <h4 style="padding-top:10px;">{{mentee.fname}} {{mentee.lname}}</h4>
+                <p>Sort out the styling of the cards, front and back</p>
+
+                <button type="button" class="btn btn-light" data-toggle="modal" data-target="#{{mentee.username}}">
+                  View Profile
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      <!-- Modal -->
+      <div class="modal fade" id={{mentee.username}} tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLongTitle">{{mentee.fname}} {{mentee.lname}}</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <center>
+                          <img src="{{ url_for('static', filename= file_path) }}" alt="Avatar" name="aboutme" width="140" height="140" border="0" style="border-radius: 50%;">
+                          <h3 class="media-heading">{{mentee.fname}} {{mentee.lname}}</h3>
+                          <span><strong>Preferences: </strong></span>
+                          {% if mentee.cv_help == true %}
+                              <span class="badge badge-pill badge-success">CV checks</span>
+                          {% endif %}
+                          {% if mentee.meetAlumni == true %}
+                              <span class="badge badge-pill badge-success">Meeting Alumni</span>
+                          {% endif %}
+                          {% if mentee.mockInterview == true %}
+                              <span class="badge badge-pill badge-success">Mock Interviews</span>
+                          {% endif %}
+
+                          </center>
+                          <hr>
+                          <center>
+                          <p class="text-left" style="color:black;"><strong>Bio: </strong><br>
+                            {{mentee.bio}}
+                          <br>
+                          <hr>
+                          <p class="text-left" style="color:black;"><strong>Job: </strong>Studying</p>
+
+                          <br>
+                          </center>
+            </div>
+            <div class="modal-footer" >
+
+              <a href="#" class="fa fa-linkedin" style="text-align:center;"></a>
+              <a href="#" class="fa fa-envelope-open-text" style="text-align:center;"></a>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    {% endif %}
+
+
+    {% if mentor_data %}
+      {% for mentor in mentor_data %}
+        <div class="col-sm">
+          <div class="flip-card">
+            <div class="flip-card-inner">
+              <div class="flip-card-front" style="background-color:#FF8C00;">
+                {% set file_path = ["img/", mentor.profile_pic]|join %}
+                <img src="{{ url_for('static', filename= file_path) }}" alt="Avatar" style="max-height:200px;width:100%;padding:10px;">
+                <p style="color:black;">{{mentor.fname}} {{mentor.lname}}</p>
+              </div>
+              <div class="flip-card-back" style="background-color:#FF8C00;">
+                <h4 style="padding-top:10px;">{{mentor.fname}} {{mentor.lname}}</h4>
+                <p>Sort out the styling of the cards, front and back</p>
+
+                <button type="button" class="btn btn-light" data-toggle="modal" data-target="#{{mentor.username}}">
+                  View Profile
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      <!-- Modal -->
+      <div class="modal fade" id={{mentor.username}} tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLongTitle">{{mentor.fname}} {{mentor.lname}}</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <center>
+                          <img src="{{ url_for('static', filename= file_path) }}" alt="Avatar" name="aboutme" width="140" height="140" border="0" style="border-radius: 50%;">
+                          <h3 class="media-heading">{{mentor.fname}} {{mentor.lname}}</h3>
+                          <span><strong>Preferences: </strong></span>
+                          {% if mentor.cv_help == true %}
+                              <span class="badge badge-pill badge-success">CV checks</span>
+                          {% endif %}
+                          {% if mentor.meetStudents == true %}
+                              <span class="badge badge-pill badge-success">Meeting Students</span>
+                          {% endif %}
+                          {% if mentor.mockInterview == true %}
+                              <span class="badge badge-pill badge-success">Mock Interviews</span>
+                          {% endif %}
+                          {% if mentor.workExp == true %}
+                              <span class="badge badge-pill badge-success">Arranging work experience</span>
+                          {% endif %}
+                          </center>
+                          <hr>
+                          <center>
+                          <p class="text-left" style="color:black;"><strong>Bio: </strong><br>
+                            {{mentor.bio}}
+                          <br>
+                          <hr>
+                          <p class="text-left" style="color:black;"><strong>Job: </strong>{{mentor.job}}</p>
+
+                          <br>
+                          </center>
+            </div>
+            <div class="modal-footer" >
+
+              <a href="#" class="fa fa-linkedin" style="text-align:center;"></a>
+              <a href="#" class="fa fa-envelope-open-text" style="text-align:center;"></a>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    {% endif %}
+
+
+
+
+
+</div>
+</div>
+
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
+<script type="text/javascript">
+  $().ready(function(){
+      $('[rel="tooltip"]').tooltip();
+
+      $('a.scroll-down').click(function(e){
+          e.preventDefault();
+          scroll_target = $(this).data('href');
+           $('html, body').animate({
+               scrollTop: $(scroll_target).offset().top - 60
+           }, 1000);
+      });
+
+  });
+
+  function rotateCard(btn){
+      var $card = $(btn).closest('.card-container');
+      console.log($card);
+      if($card.hasClass('hover')){
+          $card.removeClass('hover');
+      } else {
+          $card.addClass('hover');
+      }
+  }
+
+
+</script>
+
+{% endblock %}
+
+{% block right_button %}
+<button type="button" class="btn btn-outline-danger" onclick="window.location.href='{{ url_for('editProfile') }}';">Edit Profile</button>
+{% endblock %}
