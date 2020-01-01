@@ -15,7 +15,7 @@ Current Progress
 
 How can i run this?
 -----
-
+0) Install dependencies using pip
 1) Set up the PostgreSQL database on a platform like heroku.
 2) Change the database url in the app.py line 14 as well as make_tables.py line 11
 3) Run the make_tables.py file to create all the tables in the database.
