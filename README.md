@@ -8,8 +8,10 @@ Background and Motivation
 
 Current Progress
 ----------------
-![](demo.gif)
-Full video here: https://youtu.be/D5yAuz7L9XE
+
+![Alt Text](https://media.giphy.com/media/UuBfDAFwDeHlqLeNpT/giphy.gif)
+
+- Full video here: https://youtu.be/D5yAuz7L9XE
 
 How can i run this?
 -----
