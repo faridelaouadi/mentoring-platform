@@ -1,3 +1,5 @@
+![mockup](arabsoc.png)
+
 Background and Motivation
 ------
 
