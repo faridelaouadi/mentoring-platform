@@ -15,13 +15,13 @@ How can i run this?
 -----
 
 1) Set up the PostgreSQL database on a platform like heroku.
-2) Change the database url in the run.py file
+2) Change the database url in the app.py line 14 as well as make_tables.py line 11
 3) Run the make_tables.py file to create all the tables in the database.
-4) run the run.py file
+4) run the app.py file
 5) Enjoy :)
 
 
-Things to do
+Things to do to extend functionality
 ------------
 1) Encrypt passwords in the database
 2) Naming convention for images and resources so they are always unique  
